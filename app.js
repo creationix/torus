@@ -21,14 +21,17 @@ var scene = new Scene();
 // Create a basic perspective camera
 var camera = new PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-// Create a renderer with Antialiasing
-var renderer = new WebGLRenderer({antialias:true});
 
-// Configure renderer clear color
-renderer.setClearColor("#000000");
-
-// Configure renderer size
+let renderer = new WebGLRenderer( { antialias: true } );
+renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.gammaInput = true;
+renderer.gammaOutput = true;
+renderer.shadowMap.enabled = true;
+renderer.vr.enabled = true;
+document.body.appendChild( renderer.domElement );
+document.body.appendChild( WEBVR.createButton( renderer ) );
+
 
 let controller1 = renderer.vr.getController( 0 );
 controller1.addEventListener( 'selectstart', onSelectStart );
@@ -42,19 +45,11 @@ line.scale.z = 5;
 
 controller1.add( line.clone() );
 
-
-// Append Renderer to DOM
-document.body.appendChild( renderer.domElement );
-
-document.body.appendChild( WEBVR.createButton( renderer ) );
-
-renderer.vr.enabled = true;
-
 // ------------------------------------------------
 // FUN STARTS HERE
 // ------------------------------------------------
 
-var geometry = new TorusKnotBufferGeometry( 1, .3, 128, 16, 3, 5 );
+var geometry = new TorusKnotBufferGeometry( 1, .25, 256, 32, 2, 5 );
 var material = new MeshNormalMaterial();
 var torusKnot = new Mesh( geometry, material );
 scene.add( torusKnot );
@@ -65,12 +60,12 @@ let room = new LineSegments(
   new BoxLineGeometry( 6, 6, 6, 10, 10, 10 ),
   new LineBasicMaterial( { color: 0x808080 } )
 );
-room.geometry.translate( 0, 3, 0 );
+room.geometry.translate( 0, 3, -1.5 );
 scene.add( room );
 
 
 renderer.setAnimationLoop(() => {
-  let t = Date.now() / 2000;
+  let t = Date.now() / 8000;
   torusKnot.rotation.x = Math.PI * Math.sin(t);
   torusKnot.rotation.y = Math.PI * Math.cos(t);
   torusKnot.rotation.z = t;
@@ -84,4 +79,12 @@ function onSelectStart(event) {
 
 function onSelectEnd(event) {
 
+}
+
+window.addEventListener( 'resize', onWindowResize, false );
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize( window.innerWidth, window.innerHeight );
 }
