@@ -5,6 +5,9 @@ import {
   Mesh,
   TorusKnotBufferGeometry,
   MeshNormalMaterial,
+  BufferGeometry,
+  Line,
+  Vector3,
 } from "https://three.revision.studio/build/three.module.js"
 
 import { WEBVR } from 'https://three.revision.studio/examples/jsm/vr/WebVR.js'
@@ -22,6 +25,19 @@ renderer.setClearColor("#000000");
 
 // Configure renderer size
 renderer.setSize( window.innerWidth, window.innerHeight );
+
+let controller1 = renderer.vr.getController( 0 );
+controller1.addEventListener( 'selectstart', onSelectStart );
+controller1.addEventListener( 'selectend', onSelectEnd );
+scene.add( controller1 );
+
+var geometry = new BufferGeometry().setFromPoints( [ new Vector3( 0, 0, 0 ), new Vector3( 0, 0, - 1 ) ] );
+var line = new Line( geometry );
+line.name = 'line';
+line.scale.z = 5;
+
+controller1.add( line.clone() );
+
 
 // Append Renderer to DOM
 document.body.appendChild( renderer.domElement );
@@ -48,3 +64,10 @@ renderer.setAnimationLoop(() => {
   renderer.render( scene, camera );
 });
    
+function onSelectStart(event) {
+
+}
+
+function onSelectEnd(event) {
+
+}
