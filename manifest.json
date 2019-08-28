@@ -1,0 +1,16 @@
+{
+  "short_name": "Torus",
+  "name": "Torus Knot",
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#2288ff",
+  "display": "standalone",
+  "scope": "./",
+  "theme_color": "#2288ff"
+}

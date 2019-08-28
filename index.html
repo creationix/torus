@@ -1,0 +1,12 @@
+<title>Torus Knot</title>
+<link rel="manifest" href="manifest.json">
+<script>
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker
+           .register('/sw.js')
+           .then(() => console.log('Service Worker Registered'))
+}
+</script>
+
+<style>canvas { position: absolute; top: 0; left: 0; right: 0; bottom: 0; height: 100%; width: 100%; }</style>
+<script type="module" src="app.js"></script>
