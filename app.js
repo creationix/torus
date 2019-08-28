@@ -5,10 +5,14 @@ import {
   Mesh,
   TorusKnotBufferGeometry,
   MeshNormalMaterial,
+  LineBasicMaterial,
   BufferGeometry,
   Line,
   Vector3,
+  LineSegments,
 } from "https://three.revision.studio/build/three.module.js"
+
+import { BoxLineGeometry } from 'https://three.revision.studio/examples/jsm/geometries/BoxLineGeometry.js';
 
 import { WEBVR } from 'https://three.revision.studio/examples/jsm/vr/WebVR.js'
 
@@ -50,16 +54,26 @@ renderer.vr.enabled = true;
 // FUN STARTS HERE
 // ------------------------------------------------
 
-var geometry = new TorusKnotBufferGeometry( 3, 1, 100, 16 );
+var geometry = new TorusKnotBufferGeometry( 1, .3, 128, 16, 3, 5 );
 var material = new MeshNormalMaterial();
 var torusKnot = new Mesh( geometry, material );
 scene.add( torusKnot );
-torusKnot.position.z = -15;
+torusKnot.position.z = -3;
+torusKnot.position.y = 1.5;
+
+let room = new LineSegments(
+  new BoxLineGeometry( 6, 6, 6, 10, 10, 10 ),
+  new LineBasicMaterial( { color: 0x808080 } )
+);
+room.geometry.translate( 0, 3, 0 );
+scene.add( room );
 
 
 renderer.setAnimationLoop(() => {
-  torusKnot.rotation.x += 0.01;
-  torusKnot.rotation.y += 0.01;
+  let t = Date.now() / 2000;
+  torusKnot.rotation.x = Math.PI * Math.sin(t);
+  torusKnot.rotation.y = Math.PI * Math.cos(t);
+  torusKnot.rotation.z = t;
 
   renderer.render( scene, camera );
 });
