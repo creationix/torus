@@ -29,6 +29,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
 renderer.shadowMap.enabled = true;
+renderer.xr.enabled = true;
 document.body.appendChild( renderer.domElement );
 document.body.appendChild( VRButton.createButton( renderer ) );
 
