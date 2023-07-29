@@ -1,13 +1,20 @@
 <title>Torus Knot</title>
 <link rel="manifest" href="manifest.json">
-<script>
+<script type="importmap">
+  {
+    "imports": {
+      "three": "../three.js/build/three.module.js"
+    }
+  }
+</script>
+
+<!-- <script>
 if('serviceWorker' in navigator) {
   navigator.serviceWorker
            .register('/sw.js')
            .then(() => console.log('Service Worker Registered'))
 }
-</script>
-<script src="https://three.revision.studio/examples/js/vr/HelioWebXRPolyfill.js"></script>
+</script> -->
 
 <style>canvas { position: absolute; top: 0; left: 0; right: 0; bottom: 0; height: 100%; width: 100%; }</style>
 <script type="module" src="app.js"></script>

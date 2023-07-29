@@ -3,18 +3,19 @@ import {
   PerspectiveCamera,
   Scene,
   Mesh,
-  TorusKnotBufferGeometry,
+  TorusKnotGeometry,
   MeshNormalMaterial,
   LineBasicMaterial,
   BufferGeometry,
   Line,
   Vector3,
   LineSegments,
-} from "https://three.revision.studio/build/three.module.js"
+} from "three"
 
-import { BoxLineGeometry } from 'https://three.revision.studio/examples/jsm/geometries/BoxLineGeometry.js';
+import { BoxLineGeometry } from '../three.js/examples/jsm/geometries/BoxLineGeometry.js';
 
-import { WEBVR } from 'https://three.revision.studio/examples/jsm/vr/WebVR.js'
+import { VRButton } from '../three.js/examples/jsm/webxr/VRButton.js';
+
 
 var scene = new Scene();
 
@@ -28,28 +29,27 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
 renderer.shadowMap.enabled = true;
-renderer.vr.enabled = true;
 document.body.appendChild( renderer.domElement );
-document.body.appendChild( WEBVR.createButton( renderer ) );
+document.body.appendChild( VRButton.createButton( renderer ) );
 
 
-let controller1 = renderer.vr.getController( 0 );
-controller1.addEventListener( 'selectstart', onSelectStart );
-controller1.addEventListener( 'selectend', onSelectEnd );
-scene.add( controller1 );
+// let controller1 = renderer.vr.getController( 0 );
+// controller1.addEventListener( 'selectstart', onSelectStart );
+// controller1.addEventListener( 'selectend', onSelectEnd );
+// scene.add( controller1 );
 
 var geometry = new BufferGeometry().setFromPoints( [ new Vector3( 0, 0, 0 ), new Vector3( 0, 0, - 1 ) ] );
 var line = new Line( geometry );
 line.name = 'line';
 line.scale.z = 5;
 
-controller1.add( line.clone() );
+// controller1.add( line.clone() );
 
 // ------------------------------------------------
 // FUN STARTS HERE
 // ------------------------------------------------
 
-var geometry = new TorusKnotBufferGeometry( 1, .25, 256, 32, 2, 5 );
+var geometry = new TorusKnotGeometry( 1, .25, 256, 32, 2, 5 );
 var material = new MeshNormalMaterial();
 var torusKnot = new Mesh( geometry, material );
 scene.add( torusKnot );
